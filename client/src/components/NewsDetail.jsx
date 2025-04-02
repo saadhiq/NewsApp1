@@ -40,7 +40,7 @@ function NewsDetail() {
       <h2 className="text-2xl font-semibold">{news.title}</h2>
       <img
         className="w-full h-64 object-cover rounded mt-4"
-        src={news.imgUrl}
+        src={news.cover_image}
         alt={news.title}
       />
       <p className="mt-4">{news.description}</p>
