@@ -18,7 +18,7 @@ function NewsDetail() {
       return;
     }
 
-    fetch(`http://localhost:3000/news?category=${category}&id=${id}`) // Ensure this port matches your backend
+    fetch(`http://localhost:3000/news?category=${category}&id=${id}`)
       .then((response) => response.json())
       .then((json) => {
         if (json.success) {
@@ -37,13 +37,15 @@ function NewsDetail() {
 
   return (
     <div className="container mx-auto p-6">
-      <h2 className="text-2xl font-semibold">{news.title}</h2>
+      <h1>{news.title}</h1>
       <img
         className="w-full h-64 object-cover rounded mt-4"
         src={news.cover_image}
         alt={news.title}
       />
-      <p className="mt-4">{news.description}</p>
+
+      <h2 className="text-2xl font-semibold">summary</h2>
+      <p className="mt-4">{news.summary}</p>
 
       <div className="mt-4">
         <b>Article Urls:</b>
@@ -114,7 +116,7 @@ function NewsDetail() {
           <p>No source available</p>
         )}
       </div>
-
+      <h2 className="text-2xl font-semibold">Full content</h2>
       <p className="mt-4">{news.content}</p>
     </div>
   );
