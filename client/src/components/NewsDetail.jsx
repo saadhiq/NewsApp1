@@ -46,7 +46,7 @@ function NewsDetail() {
       <p className="mt-4">{news.description}</p>
 
       <div className="mt-4">
-        <b>Source:</b>
+        <b>Article Urls:</b>
         {news.url ? (
           <ul>
             <li>
@@ -81,8 +81,8 @@ function NewsDetail() {
       </div>
 
       <div className="mt-4">
-        <b>Article URLs:</b>
-        {news.url ? (
+        <b>News Provider:</b>
+        {news.source ? (
           <ul>
             <li>
               <a
@@ -91,7 +91,7 @@ function NewsDetail() {
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"
               >
-                {news.url.trim()}
+                {news.source.trim()}
               </a>
             </li>
           </ul>
@@ -100,12 +100,12 @@ function NewsDetail() {
             {news.articles.map((article, idx) => (
               <li key={idx}>
                 <a
-                  href={article.url}
+                  href={article.source}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="text-blue-600 underline"
                 >
-                  {article.url}
+                  {article.source}
                 </a>
               </li>
             ))}
