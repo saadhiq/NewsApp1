@@ -34,14 +34,15 @@ function NewsDetail() {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
   if (!news) return <p className="text-red-600">No news details available.</p>;
+  const mainArticle = news.articles.find(article => article.id === news.id);
 
   return (
     <div className="container mx-auto p-6">
-      <h1>{news.title}</h1>
+      <h1>{news.representative_title}</h1>
       <img
-        className="w-full h-64 object-cover rounded mt-4"
-        src={news.cover_image}
-        alt={news.title}
+        className="w-200 h-200 md:w-100 md:h-100 object-cover rounded mt-4"
+        src={mainArticle.cover_image}
+        alt={mainArticle.title}
       />
 
       <h2 className="text-2xl font-semibold">summary</h2>

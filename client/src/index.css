@@ -270,6 +270,14 @@ ul li ul li a:hover {
     font-size: 30px;
 }
 
+.container{
+    font-family: "Freeman", sans-serif;
+    padding-top: 100px;
+    padding-left: 25px;
+    font-weight: 100;
+    font-size: 25px;
+}
+
 .description{
     font-size: 12px;
 
