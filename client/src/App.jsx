@@ -21,7 +21,7 @@ function App() {
           <Route path="/top-headlines/:category" element={<TopHeadlines />} />
           <Route path="/country/:iso" element={<CountryNews />} />
           {/* Route for news details */}
-          <Route path="/news/:id" element={<NewsDetail />} />
+          <Route path="/news:id" element={<NewsDetail />} />
           {/* <Route path="/news/:id" element={<NewsPage />} /> */}
         </Routes>
         <Footer />

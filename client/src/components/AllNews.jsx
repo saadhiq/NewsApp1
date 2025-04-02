@@ -91,6 +91,8 @@ function AllNews() {
           }
           newsProvider={newsProviders}
           source={urls}
+          id={element.id}
+          category={element.category}
         />
       );
     })

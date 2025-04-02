@@ -28,7 +28,7 @@ function EverythingCard(props) {
 
         {/* Info Section */}
         <div className="info compact space-y-2 text-center">
-          <div className="source-info flex flex-col gap-1 items-center">
+          {/* <div className="source-info flex flex-col gap-1 items-center">
             {props.source.split(",").map((url, idx) => (
               <div key={idx} className="flex items-center gap-1">
                 <span className="font-semibold">Source {idx + 1}:</span>
@@ -42,20 +42,20 @@ function EverythingCard(props) {
                 </a>
               </div>
             ))}
-          </div>
+          </div> */}
 
-          <div className="origin flex flex-col space-y-1 text-sm text-gray-600 items-center">
+          {/* <div className="origin flex flex-col space-y-1 text-sm text-gray-600 items-center">
             {props.newsProvider.split(",").map((provider, idx) => (
               <p key={idx} className="origin-item line-clamp-1">
                 <span className="font-semibold">News Provider {idx + 1}:</span>{" "}
                 {provider.trim()}
               </p>
             ))}
-          </div>
+          </div> */}
         </div>
         {/* Link to the same page's news detail section */}
         <Link
-          to={`/news/:id/${1}`}  // Links to a specific section in the page
+          to={`/news?category=${props.category}&id=${props.id}`}  // Links to a specific section in the page
           className="text-center text-blue-500 mt-4 font-semibold text-lg hover:text-blue-700 transition-all duration-300 ease-in-out transform hover:scale-120"
         >
           <span className="mr-2">➡️</span> Read more
