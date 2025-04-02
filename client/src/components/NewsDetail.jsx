@@ -18,7 +18,7 @@ function NewsDetail() {
       return;
     }
 
-    fetch(`http://localhost:3000/news?category=${category}&id=${id}`) // I have changed the port to python
+    fetch(`http://localhost:3000/news?category=${category}&id=${id}`) // Ensure this port matches your backend
       .then((response) => response.json())
       .then((json) => {
         if (json.success) {
@@ -33,33 +33,86 @@ function NewsDetail() {
 
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
+  if (!news) return <p className="text-red-600">No news details available.</p>;
 
   return (
     <div className="container mx-auto p-6">
       <h2 className="text-2xl font-semibold">{news.title}</h2>
-      <img className="w-full h-64 object-cover rounded mt-4" src={news.imgUrl} alt={news.title} />
+      <img
+        className="w-full h-64 object-cover rounded mt-4"
+        src={news.imgUrl}
+        alt={news.title}
+      />
       <p className="mt-4">{news.description}</p>
 
       <div className="mt-4">
         <b>Source:</b>
-        <ul>
-          {news.source.split(",").map((url, idx) => (
-            <li key={idx}>
-              <a href={url.trim()} target="_blank" rel="noopener noreferrer" className="text-blue-600 underline">
-                {url.trim()}
+        {news.url ? (
+          <ul>
+            <li>
+              <a
+                href={news.url.trim()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {news.url.trim()}
               </a>
             </li>
-          ))}
-        </ul>
+          </ul>
+        ) : news.articles && news.articles.length > 0 ? (
+          <ul>
+            {news.articles.map((article, idx) => (
+              <li key={idx}>
+                <a
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  {article.url}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No source available</p>
+        )}
       </div>
 
       <div className="mt-4">
-        <b>News Provider:</b>
-        <ul>
-          {news.newsProvider.split(",").map((provider, idx) => (
-            <li key={idx}>{provider.trim()}</li>
-          ))}
-        </ul>
+        <b>Article URLs:</b>
+        {news.url ? (
+          <ul>
+            <li>
+              <a
+                href={news.url.trim()}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-600 underline"
+              >
+                {news.url.trim()}
+              </a>
+            </li>
+          </ul>
+        ) : news.articles && news.articles.length > 0 ? (
+          <ul>
+            {news.articles.map((article, idx) => (
+              <li key={idx}>
+                <a
+                  href={article.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-blue-600 underline"
+                >
+                  {article.url}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p>No source available</p>
+        )}
       </div>
 
       <p className="mt-4">{news.content}</p>

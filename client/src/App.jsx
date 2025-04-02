@@ -1,4 +1,4 @@
-import { useState } from "react";
+// c
 import "./App.css";
 import Header from "./components/Header";
 import AllNews from "./components/AllNews";
@@ -10,7 +10,7 @@ import NewsDetail from "./components/NewsDetail"; // Assuming you'll create this
 import NewsPage from "./components/NewsPage";
 
 function App() {
-  const [count, setCount] = useState(0);
+  // const [count, setCount] = useState(0);
 
   return (
     <div className="w-full">
@@ -21,7 +21,7 @@ function App() {
           <Route path="/top-headlines/:category" element={<TopHeadlines />} />
           <Route path="/country/:iso" element={<CountryNews />} />
           {/* Route for news details */}
-          <Route path="/news:id" element={<NewsDetail />} />
+          <Route path="/news" element={<NewsDetail />} />
           {/* <Route path="/news/:id" element={<NewsPage />} /> */}
         </Routes>
         <Footer />

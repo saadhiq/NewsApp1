@@ -58,8 +58,8 @@ function fetchNews(url, res) {
       } else {
         res.status(200).json({
           success: true,
-          message: "News list is empty",
-          data: "no data to show",
+          // message: "News list is empty",
+          data: response.data,
         });
       }
     })
@@ -110,7 +110,7 @@ app.get("/latest-news", (req, res) => {
 //   fetchNews(url, res);
 // });
 
-// specific news 
+// specific news
 app.options("/news", cors());
 app.get("/news", (req, res) => {
   const category = req.query.category;
@@ -126,7 +126,7 @@ app.get("/news", (req, res) => {
   // Assuming your Flask API provides details via this URL
   const url = `http://127.0.0.1:8000/news?category=${category}&id=${id}`;
   // const url = `http://localhost:8000/news?category=General&id=190f55b2-0d97-11f0-8ecc-98e7433fd769`;
-
+  console.log("Forwarding request to Python backend:", url);
 
   fetchNews(url, res);
 });
