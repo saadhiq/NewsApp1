@@ -1,6 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 
+// Helper function to shorten URL to base domain
+const shortenUrl = (url) => {
+  try {
+    const parsedUrl = new URL(url);
+    return parsedUrl.origin; // Returns protocol + hostname (e.g., "https://sinhala.adaderana.lk")
+  } catch (e) {
+    return url; // Fallback to original URL if parsing fails
+  }
+};
+
 function NewsDetail() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -34,22 +44,22 @@ function NewsDetail() {
   if (isLoading) return <p>Loading...</p>;
   if (error) return <p className="text-red-600">{error}</p>;
   if (!news) return <p className="text-red-600">No news details available.</p>;
-  const mainArticle = news.articles.find(article => article.id === news.id);
+  const mainArticle = news.articles.find((article) => article.id === news.id);
 
   return (
     <div className="container mx-auto p-6">
-      <h1>{news.representative_title}</h1>
+      <h1 className="sin-title font-semibold">{news.representative_title}</h1>
       <img
         className="w-200 h-200 md:w-100 md:h-100 object-cover rounded mt-4"
         src={mainArticle.cover_image}
         alt={mainArticle.title}
       />
 
-      <h2 className="text-2xl font-semibold">summary</h2>
+      <h2 className="text-2xl font-semibold">Summary</h2>
       <p className="mt-4">{news.summary}</p>
 
       <div className="mt-4">
-        <b>Article Urls:</b>
+        <b>Article URLs:</b>
         {news.url ? (
           <ul>
             <li>
@@ -59,7 +69,7 @@ function NewsDetail() {
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"
               >
-                {news.url.trim()}
+                {shortenUrl(news.url.trim())}
               </a>
             </li>
           </ul>
@@ -73,7 +83,7 @@ function NewsDetail() {
                   rel="noopener noreferrer"
                   className="text-blue-600 underline"
                 >
-                  {article.url}
+                  {shortenUrl(article.url)}
                 </a>
               </li>
             ))}
@@ -94,7 +104,7 @@ function NewsDetail() {
                 rel="noopener noreferrer"
                 className="text-blue-600 underline"
               >
-                {news.source.trim()}
+                {shortenUrl(news.url.trim())}
               </a>
             </li>
           </ul>
@@ -108,7 +118,7 @@ function NewsDetail() {
                   rel="noopener noreferrer"
                   className="text-blue-600 underline"
                 >
-                  {article.source}
+                  {shortenUrl(article.source)}
                 </a>
               </li>
             ))}
@@ -117,7 +127,8 @@ function NewsDetail() {
           <p>No source available</p>
         )}
       </div>
-      <h2 className="text-2xl font-semibold">Full content</h2>
+
+      <h2 className="text-2xl font-semibold">Full Content</h2>
       <p className="mt-4">{news.content}</p>
     </div>
   );

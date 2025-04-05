@@ -8,6 +8,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import CountryNews from "./components/CountryNews";
 import NewsDetail from "./components/NewsDetail"; // Assuming you'll create this component for detailed view
 import NewsPage from "./components/NewsPage";
+import Search1 from "./components/Search1";
 
 function App() {
   // const [count, setCount] = useState(0);
@@ -23,6 +24,7 @@ function App() {
           {/* Route for news details */}
           <Route path="/news" element={<NewsDetail />} />
           {/* <Route path="/news/:id" element={<NewsPage />} /> */}
+          <Route path="/search" element={<Search1 />} />
         </Routes>
         <Footer />
       </BrowserRouter>

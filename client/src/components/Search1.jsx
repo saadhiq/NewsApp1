@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom"; // Replace useParams with useLocation
 import EverythingCard from "./EverythingCard";
 import Loader from "./Loader";
 
-function TopHeadlines() {
-  const { category } = useParams(); // Destructure for clarity
+function Search1() {
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const query = queryParams.get("query"); // Get query from URL (e.g., ?query=technology)
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
@@ -22,10 +24,16 @@ function TopHeadlines() {
   }
 
   useEffect(() => {
+    if (!query) {
+      setError("No search query provided");
+      setIsLoading(false);
+      return;
+    }
+
     setIsLoading(true);
     setError(null);
 
-    fetch(`http://127.0.0.1:3000/top-headlines/${category}`)
+    fetch(`http://127.0.0.1:3000/search?query=${query}`)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Network response was not ok");
@@ -34,10 +42,10 @@ function TopHeadlines() {
       })
       .then((json) => {
         if (json.success) {
-          setTotalResults(json.data.length);
-          setData(json.data);
-          // setTotalResults(json.data.totalResults || 0); // Adjust if Flask uses a different key
-          // setData(json.data.articles || []); // Fallback to empty array
+            setTotalResults(json.data.length);
+            setData(json.data);
+        //   setTotalResults(json.data.totalResults || 0);
+        //   setData(json.data.articles || []);
         } else {
           setError(json.message || "An error occurred");
         }
@@ -49,7 +57,7 @@ function TopHeadlines() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [page, category]); // Dependency on category, not params.category
+  }, [page, query]); // Depend on query, not search
 
   return (
     <>
@@ -80,7 +88,7 @@ function TopHeadlines() {
               />
             ))
           ) : (
-            <p>No articles found for this category or criteria.</p>
+            <p>No articles found for this search query.</p>
           )
         ) : (
           <Loader />
@@ -111,4 +119,4 @@ function TopHeadlines() {
   );
 }
 
-export default TopHeadlines;
+export default Search1;

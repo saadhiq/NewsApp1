@@ -89,13 +89,40 @@ app.get("/latest-news", (req, res) => {
 });
 
 //top-headlines
-// app.options("/top-headlines", cors());
-// app.get("/top-headlines", (req, res) => {
+app.options("/top-headlines/:category", cors());
+app.get("/top-headlines/:category", (req, res) => {
+  let pageSize = parseInt(req.query.pageSize) || 80;
+  let page = parseInt(req.query.page) || 1;
+ 
+  // let category = req.query.category || "Business";
+  let category = req.params.category;
+
+  // if (category=='politics'){
+  //   category = "politics";
+  // }
+  console.log(category)
+
+
+  let url = `http://127.0.0.1:8000/news?category=${category}`;
+  fetchNews(url, res);
+});
+
+//Search
+// app.options("/search/:query", cors());
+// app.get("/search/:query", (req, res) => {
 //   let pageSize = parseInt(req.query.pageSize) || 80;
 //   let page = parseInt(req.query.page) || 1;
-//   let category = req.query.category || "business";
+ 
+//   // let category = req.query.category || "Business";
+//   let query = req.params.query;
 
-//   let url = `https://newsapi.org/v2/top-headlines?category=${category}&language=en&page=${page}&pageSize=${pageSize}&apikey=${API_KEY}`;
+//   // if (category=='politics'){
+//   //   category = "politics";
+//   // }
+//   console.log(query)
+
+
+//   let url = `http://127.0.0.1:8000/search?query=${query}`;
 //   fetchNews(url, res);
 // });
 
@@ -111,22 +138,45 @@ app.get("/latest-news", (req, res) => {
 // });
 
 // specific news
-app.options("/news", cors());
-app.get("/news", (req, res) => {
-  const category = req.query.category;
-  const id = req.query.id;
+// app.options("/news", cors());
+// app.get("/news", (req, res) => {
+//   const category = req.query.category;
+//   const id = req.query.id;
 
-  if (!category || !id) {
+//   if (!category || !id) {
+//     return res.status(400).json({
+//       success: false,
+//       message: "Missing required query parameters: category and id",
+//     });
+//   }
+
+//   // Assuming your Flask API provides details via this URL
+//   const url = `http://127.0.0.1:8000/news?category=${category}&id=${id}`;
+//   console.log("Forwarding request to Python backend:", url);
+
+//   fetchNews(url, res);
+// });
+
+app.options("/search", cors());
+app.get("/search", (req, res) => {
+  const query = req.query.query; // Extract 'query' from query string
+  const pageSize = parseInt(req.query.pageSize) || 80;
+  const page = parseInt(req.query.page) || 1;
+
+  // Validate query parameter
+  if (!query) {
     return res.status(400).json({
       success: false,
-      message: "Missing required query parameters: category and id",
+      message: "Missing required query parameter: query",
     });
   }
 
-  // Assuming your Flask API provides details via this URL
-  const url = `http://127.0.0.1:8000/news?category=${category}&id=${id}`;
-  // const url = `http://localhost:8000/news?category=General&id=190f55b2-0d97-11f0-8ecc-98e7433fd769`;
-  console.log("Forwarding request to Python backend:", url);
+  // Log for debugging
+  console.log("Search query:", query);
+
+  // Construct Flask URL with query, page, and pageSize
+  const url = `http://127.0.0.1:8000/search?query=${query}`;
+  console.log("Forwarding request to Flask backend:", url);
 
   fetchNews(url, res);
 });

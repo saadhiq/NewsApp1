@@ -19,7 +19,7 @@ html, body {
 .light-theme {
     --background: url("./assets/back2.jpg");
     --primary: #F8FAFC;
-    --secondary: #0F172A;
+    --secondary: #cdd6ec;
     --txt: #000;
     --heading: #2dd9fe;
     --btn-color: #fff;
@@ -33,7 +33,7 @@ html, body {
     --background: url("./assets/back.jpg");
     --primary: rgb(30,41,59);
     --secondary: #D5DDF0;
-    --txt: #000;
+    --txt: #fafafa;
     --heading: #4666FF;
     --btn-color: #000;
     --btn-background: #5f99be;
@@ -230,7 +230,8 @@ ul li ul li a:hover {
 
 .everything-card {
     width: 300px;
-    height: 500px;
+    height: 400px;
+    background:var(--primary);
     overflow: hidden;
     border-radius: 15px;
     object-position: center;
