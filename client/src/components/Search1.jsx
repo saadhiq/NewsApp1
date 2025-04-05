@@ -85,6 +85,7 @@ function Search1() {
                 url={element.url}
                 author={element.author}
                 source={element.source?.name || element.source} // Handle source as object or string
+                
               />
             ))
           ) : (

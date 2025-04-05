@@ -137,25 +137,25 @@ app.get("/top-headlines/:category", (req, res) => {
 //   fetchNews(url, res);
 // });
 
-// specific news
-// app.options("/news", cors());
-// app.get("/news", (req, res) => {
-//   const category = req.query.category;
-//   const id = req.query.id;
+//specific news
+app.options("/news", cors());
+app.get("/news", (req, res) => {
+  const category = req.query.category;
+  const id = req.query.id;
 
-//   if (!category || !id) {
-//     return res.status(400).json({
-//       success: false,
-//       message: "Missing required query parameters: category and id",
-//     });
-//   }
+  if (!category || !id) {
+    return res.status(400).json({
+      success: false,
+      message: "Missing required query parameters: category and id",
+    });
+  }
 
-//   // Assuming your Flask API provides details via this URL
-//   const url = `http://127.0.0.1:8000/news?category=${category}&id=${id}`;
-//   console.log("Forwarding request to Python backend:", url);
+  // Assuming your Flask API provides details via this URL
+  const url = `http://127.0.0.1:8000/news?category=${category}&id=${id}`;
+  console.log("Forwarding request to Python backend:", url);
 
-//   fetchNews(url, res);
-// });
+  fetchNews(url, res);
+});
 
 app.options("/search", cors());
 app.get("/search", (req, res) => {
@@ -172,11 +172,11 @@ app.get("/search", (req, res) => {
   }
 
   // Log for debugging
-  console.log("Search query:", query);
+  // console.log("Search query:", query);
 
   // Construct Flask URL with query, page, and pageSize
   const url = `http://127.0.0.1:8000/search?query=${query}`;
-  console.log("Forwarding request to Flask backend:", url);
+  // console.log("Forwarding request to Flask backend:", url);
 
   fetchNews(url, res);
 });

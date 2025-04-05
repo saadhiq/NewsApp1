@@ -76,7 +76,9 @@ function TopHeadlines() {
                 publishedAt={element.publishedAt}
                 url={element.url}
                 author={element.author}
-                source={element.source?.name || element.source} // Handle source as object or string
+                source={element.source?.name || element.source}
+                id={element.id}
+                category={element.category} // Handle source as object or string
               />
             ))
           ) : (

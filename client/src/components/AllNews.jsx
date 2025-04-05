@@ -55,51 +55,50 @@ function AllNews() {
       </div>
 
       <div className="mt-16 mb-10 cards grid grid-cols-1 gap-4 xs:p-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:px-16 lg:gap-6 xl:gap-8">
-  {!isLoading ? (
-    data.map((element, index) => {
-      const isGroup = !!element.group_id;
+        {!isLoading ? (
+          data.map((element, index) => {
+            const isGroup = !!element.group_id;
 
-      if (
-        isGroup &&
-        (!element.articles || element.articles.length === 0)
-      ) {
-        return null; // Don't render the card if no articles exist
-      }
+            if (
+              isGroup &&
+              (!element.articles || element.articles.length === 0)
+            ) {
+              return null; // Don't render the card if no articles exist
+            }
 
-      const urls = isGroup
-        ? element.articles.map((article) => article.url).join(",")
-        : element.url;
+            const urls = isGroup
+              ? element.articles.map((article) => article.url).join(",")
+              : element.url;
 
-      const newsProviders = isGroup
-        ? element.articles.map((article) => article.source).join(",")
-        : element.source;
+            const newsProviders = isGroup
+              ? element.articles.map((article) => article.source).join(",")
+              : element.source;
 
-      return (
-        <EverythingCard
-          key={index}
-          title={isGroup ? element.representative_title : element.title}
-          description={element.summary}
-          imgUrl={
-            isGroup
-              ? element.articles[0].cover_image
-              : element.cover_image
-          }
-          publishedDate={
-            isGroup
-              ? element.articles[0].date_published
-              : element.date_published
-          }
-          newsProvider={newsProviders}
-          source={urls}
-          id={element.id}
-          category={element.category}
-        />
-      );
-    })
-  ) : (
-    <Loader />
-  )}
-</div>
+            return (
+              <EverythingCard
+                key={index}
+                title={isGroup ? element.representative_title : element.title}
+                description={element.summary}
+                imgUrl={
+                  isGroup
+                    ? element.articles[0].cover_image
+                    : element.cover_image
+                }
+                publishedDate={
+                  isGroup
+                    ? element.articles[0].date_published
+                    : element.date_published
+                }
+                newsProvider={newsProviders}
+                source={urls}
+                id={element.id}
+                category={element.category}
+              />
+            );
+          })
+        ) : ( <Loader /> )
+        }
+      </div>
 
 
       {!isLoading && data.length > 0 && (
