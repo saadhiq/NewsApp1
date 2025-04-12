@@ -7,6 +7,7 @@ const shortenUrl = (url) => {
     const parsedUrl = new URL(url);
     return parsedUrl.origin; // Returns protocol + hostname (e.g., "https://sinhala.adaderana.lk")
   } catch (e) {
+    console.log("error = ", e);
     return url; // Fallback to original URL if parsing fails
   }
 };

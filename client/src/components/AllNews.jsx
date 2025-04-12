@@ -63,7 +63,7 @@ function AllNews() {
               isGroup &&
               (!element.articles || element.articles.length === 0)
             ) {
-              return null; // Don't render the card if no articles exist
+              return null;
             }
 
             const urls = isGroup
@@ -78,7 +78,8 @@ function AllNews() {
               <EverythingCard
                 key={index}
                 title={isGroup ? element.representative_title : element.title}
-                description={element.summary}
+                description={element.short_summary}
+                summary={element.long_summary}
                 imgUrl={
                   isGroup
                     ? element.articles[0].cover_image
@@ -96,10 +97,10 @@ function AllNews() {
               />
             );
           })
-        ) : ( <Loader /> )
-        }
+        ) : (
+          <Loader />
+        )}
       </div>
-
 
       {!isLoading && data.length > 0 && (
         <div className="pagination flex justify-center gap-25 items-center">
