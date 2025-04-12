@@ -41,95 +41,97 @@ function NewsDetail() {
       .finally(() => setIsLoading(false));
   }, [category, id]);
 
-  if (isLoading) return <p>Loading...</p>;
-  if (error) return <p className="text-red-600">{error}</p>;
-  if (!news) return <p className="text-red-600">No news details available.</p>;
-  const mainArticle = news.articles.find((article) => article.id === news.id);
+  if (isLoading) return <p className="text-center text-white text-lg">Loading...</p>;
+  if (error) return <p className="text-center text-red-400 text-lg">{error}</p>;
+  if (!news) return <p className="text-center text-red-400 text-lg">No news details available.</p>;
+
+  const mainArticle = news.articles?.find((article) => article.id === news.id);
+
+  // Deduplicate URLs for Article URLs and News Provider
+  const uniqueArticleUrls = [...new Set(news.articles?.map((article) => article.url).filter(Boolean))];
+  const uniqueSources = [...new Set(news.articles?.map((article) => article.source).filter(Boolean))];
 
   return (
-    <div className="container mx-auto p-6">
-      <h1 className="sin-title font-semibold">{news.representative_title}</h1>
-      <img
-        className="w-200 h-200 md:w-100 md:h-100 object-cover rounded mt-4"
-        src={mainArticle.cover_image}
-        alt={mainArticle.title}
-      />
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-purple-950 text-white p-6">
+      <div className="container mx-auto max-w-4xl">
+        {/* Title */}
+        <h1
+          className="text-3xl sm:text-4xl font-bold mb-6 leading-tight"
+          style={{ fontFamily: "'Noto Sans Sinhala', sans-serif" }}
+        >
+          {news.representative_title}
+        </h1>
 
-      <h2 className="text-2xl font-semibold">Summary</h2>
-      <p className="mt-4">{news.summary}</p>
+        {/* Image */}
+        {mainArticle?.cover_image && (
+          <img
+            className="w-full max-w-md h-auto object-cover rounded-lg shadow-lg mb-6 mx-auto"
+            src={mainArticle.cover_image}
+            alt={mainArticle.title || "News cover image"}
+            onError={(e) => (e.target.src = "/fallback-image.jpg")} // Fallback image
+          />
+        )}
 
-      <div className="mt-4">
-        <b>Article URLs:</b>
-        {news.url ? (
-          <ul>
-            <li>
-              <a
-                href={news.url.trim()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline"
-              >
-                {shortenUrl(news.url.trim())}
-              </a>
-            </li>
-          </ul>
-        ) : news.articles && news.articles.length > 0 ? (
-          <ul>
-            {news.articles.map((article, idx) => (
-              <li key={idx}>
-                <a
-                  href={article.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  {shortenUrl(article.url)}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No source available</p>
+        {/* Summary */}
+        <section className="mb-8">
+          <h2 className="text-2xl font-semibold mb-3">Summary</h2>
+          <p className="text-gray-200 leading-relaxed">{news.summary}</p>
+        </section>
+
+        {/* Article URLs */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-3">Article URLs</h2>
+          {uniqueArticleUrls.length > 0 ? (
+            <ul className="space-y-2">
+              {uniqueArticleUrls.map((url, idx) => (
+                <li key={idx}>
+                  <a
+                    href={url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-300 transition-colors duration-200 underline"
+                  >
+                    {shortenUrl(url)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-400">No source available</p>
+          )}
+        </section>
+
+        {/* News Provider */}
+        <section className="mb-8">
+          <h2 className="text-xl font-semibold mb-3">News Provider</h2>
+          {uniqueSources.length > 0 ? (
+            <ul className="space-y-2">
+              {uniqueSources.map((source, idx) => (
+                <li key={idx}>
+                  <a
+                    href={source}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-blue-400 hover:text-blue-300 transition-colors duration-200 underline"
+                  >
+                    {shortenUrl(source)}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-400">No source available</p>
+          )}
+        </section>
+
+        {/* Full Content */}
+        {news.content && (
+          <section className="mb-8">
+            <h2 className="text-2xl font-semibold mb-3">Full Content</h2>
+            <p className="text-gray-200 leading-relaxed">{news.content}</p>
+          </section>
         )}
       </div>
-
-      <div className="mt-4">
-        <b>News Provider:</b>
-        {news.source ? (
-          <ul>
-            <li>
-              <a
-                href={news.url.trim()}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-600 underline"
-              >
-                {shortenUrl(news.url.trim())}
-              </a>
-            </li>
-          </ul>
-        ) : news.articles && news.articles.length > 0 ? (
-          <ul>
-            {news.articles.map((article, idx) => (
-              <li key={idx}>
-                <a
-                  href={article.source}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="text-blue-600 underline"
-                >
-                  {shortenUrl(article.source)}
-                </a>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>No source available</p>
-        )}
-      </div>
-
-      <h2 className="text-2xl font-semibold">Full Content</h2>
-      <p className="mt-4">{news.content}</p>
     </div>
   );
 }

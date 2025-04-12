@@ -41,29 +41,30 @@ function Header() {
 
   return (
     <header>
-      <nav className="fixed top-0 left-0 w-full h-auto bg-gray-800 z-10 flex items-center justify-between px-4">
+      <nav className="fixed top-0 left-0 w-full h-auto bg-gray-600 z-10 flex items-center justify-between px-8">
         {/* Logo (Left) */}
-        <h3 className="relative heading font-bold md:basis-1/6 text-2xl xs:basis-4/12 z-50 mb-5 mt-5 text-white">
-          Local News Summary
-        </h3>
+        <div className="flex items-center md:basis-1/6 sm:basis-1/4 basis-1/3">
+          <a href="/" className="group">
+            <h3
+              className="text-2xl  font-bold text-white hover:text-blue-300 transition-colors duration-200 sm:text-3xl"
+            >
+              Local News Summary
+            </h3>
+          </a>
+        </div>
 
+        
         {/* Search Bar (Middle) */}
-        <form
-          onSubmit={handleSearch}
-          className="flex-grow max-w-md mx-4" // Centered and limited width
-        >
-          <div className="relative">
+        <form onSubmit={handleSearch} className="search-form">
+          <div className="search-container">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Search news..."
-              className="w-full p-2 rounded-lg text-gray-800 focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="search-input"
             />
-            <button
-              type="submit"
-              className="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-500 text-white px-3 py-1 rounded"
-            >
+            <button type="submit" className="search-button">
               Search
             </button>
           </div>
