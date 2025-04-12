@@ -42,10 +42,10 @@ function Search1() {
       })
       .then((json) => {
         if (json.success) {
-            setTotalResults(json.data.length);
-            setData(json.data);
-        //   setTotalResults(json.data.totalResults || 0);
-        //   setData(json.data.articles || []);
+          setTotalResults(json.data.length);
+          setData(json.data);
+          //   setTotalResults(json.data.totalResults || 0);
+          //   setData(json.data.articles || []);
         } else {
           setError(json.message || "An error occurred");
         }
@@ -82,13 +82,12 @@ function Search1() {
               <EverythingCard
                 key={index}
                 title={element.title}
-                description={element.summary}
+                description={element.short_summary}
                 imgUrl={element.cover_image}
                 publishedAt={element.publishedAt}
                 url={element.url}
                 author={element.author}
                 source={element.source?.name || element.source} // Handle source as object or string
-                
               />
             ))
           ) : (

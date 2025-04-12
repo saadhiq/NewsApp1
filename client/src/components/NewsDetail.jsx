@@ -42,15 +42,25 @@ function NewsDetail() {
       .finally(() => setIsLoading(false));
   }, [category, id]);
 
-  if (isLoading) return <p className="text-center text-white text-lg">Loading...</p>;
+  if (isLoading)
+    return <p className="text-center text-white text-lg">Loading...</p>;
   if (error) return <p className="text-center text-red-400 text-lg">{error}</p>;
-  if (!news) return <p className="text-center text-red-400 text-lg">No news details available.</p>;
+  if (!news)
+    return (
+      <p className="text-center text-red-400 text-lg">
+        No news details available.
+      </p>
+    );
 
   const mainArticle = news.articles?.find((article) => article.id === news.id);
 
   // Deduplicate URLs for Article URLs and News Provider
-  const uniqueArticleUrls = [...new Set(news.articles?.map((article) => article.url).filter(Boolean))];
-  const uniqueSources = [...new Set(news.articles?.map((article) => article.source).filter(Boolean))];
+  const uniqueArticleUrls = [
+    ...new Set(news.articles?.map((article) => article.url).filter(Boolean)),
+  ];
+  const uniqueSources = [
+    ...new Set(news.articles?.map((article) => article.source).filter(Boolean)),
+  ];
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-blue-950 to-purple-950 text-white p-6">
@@ -76,7 +86,7 @@ function NewsDetail() {
         {/* Summary */}
         <section className="mb-8">
           <h2 className="text-2xl font-semibold mb-3">Summary</h2>
-          <p className="text-gray-200 leading-relaxed">{news.summary}</p>
+          <p className="text-gray-200 leading-relaxed">{news.long_summary}</p>
         </section>
 
         {/* Article URLs */}
