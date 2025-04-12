@@ -5,10 +5,10 @@ import { useLocation } from "react-router-dom";
 const shortenUrl = (url) => {
   try {
     const parsedUrl = new URL(url);
-    return parsedUrl.origin; // Returns protocol + hostname (e.g., "https://sinhala.adaderana.lk")
+    return parsedUrl.origin;
   } catch (e) {
     console.log("error = ", e);
-    return url; // Fallback to original URL if parsing fails
+    return url;
   }
 };
 
@@ -57,7 +57,7 @@ function NewsDetail() {
       />
 
       <h2 className="text-2xl font-semibold">Summary</h2>
-      <p className="mt-4">{news.summary}</p>
+      <p className="mt-4">{news.long_summary}</p>
 
       <div className="mt-4">
         <b>Article URLs:</b>
