@@ -70,7 +70,7 @@ function TopHeadlines() {
       <div className="today-header mt-8 mb-4 text-center font-semibold text-3xl text-gray-800">
         <h3> {category} news</h3>
       </div>
-      <div className="my-10 cards grid lg:place-content-center md:grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 xs:grid-cols-1 xs:gap-4 md:gap-10 lg:gap-14 md:px-16 xs:p-3">
+      <div className="mt-16 mb-10 cards grid grid-cols-1 gap-4 xs:p-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:px-16 lg:gap-6 xl:gap-8">
         {!isLoading ? (
           data.length > 0 ? (
             data.map((element, index) => (
