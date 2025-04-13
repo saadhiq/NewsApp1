@@ -51,6 +51,7 @@ function NewsDetail() {
         No news details available.
       </p>
     );
+  const isGroup = !!news.group_id;
 
   const mainArticle = news.articles?.find((article) => article.id === news.id);
 
@@ -70,14 +71,14 @@ function NewsDetail() {
           className="text-3xl sm:text-4xl font-bold mb-6 leading-tight"
           style={{ fontFamily: "'Noto Sans Sinhala', sans-serif" }}
         >
-          {news.representative_title}
+          {isGroup ? news.representative_title : news.title}
         </h1>
 
         {/* Image */}
         {mainArticle?.cover_image && (
           <img
             className="w-full max-w-md h-auto object-cover rounded-lg shadow-lg mb-6 mx-auto"
-            src={mainArticle.cover_image}
+            src={isGroup ? news.articles[0].cover_image : news.cover_image}
             alt={mainArticle.title || "News cover image"}
             onError={(e) => (e.target.src = "/fallback-image.jpg")} // Fallback image
           />

@@ -1,27 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { useLocation } from "react-router-dom"; // Replace useParams with useLocation
+import { useLocation } from "react-router-dom";
 import EverythingCard from "./EverythingCard";
 import Loader from "./Loader";
 
 function Search1() {
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
-  const query = queryParams.get("query"); // Get query from URL (e.g., ?query=technology)
+  const query = queryParams.get("query");
+
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
   const [totalResults, setTotalResults] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
-  const pageSize = 6; // Constant since it’s not dynamic
+  const pageSize = 6;
 
-  function handlePrev() {
-    setPage(page - 1);
-  }
-
-  function handleNext() {
-    setPage(page + 1);
-  }
+  const handlePrev = () => setPage(page - 1);
+  const handleNext = () => setPage(page + 1);
 
   useEffect(() => {
     if (!query) {
@@ -44,8 +40,6 @@ function Search1() {
         if (json.success) {
           setTotalResults(json.data.length);
           setData(json.data);
-          //   setTotalResults(json.data.totalResults || 0);
-          //   setData(json.data.articles || []);
         } else {
           setError(json.message || "An error occurred");
         }
@@ -57,7 +51,7 @@ function Search1() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [page, query]); // Depend on query, not search
+  }, [page, query]);
 
   return (
     <>
@@ -72,24 +66,55 @@ function Search1() {
           </button>
         </div>
       )}
+
       <div className="today-header mt-8 mb-4 text-center font-semibold text-3xl text-gray-800">
-        <h3> Search Result </h3>
+        <h3>Search Result</h3>
       </div>
+
       <div className="mt-16 mb-10 cards grid grid-cols-1 gap-4 xs:p-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:px-16 lg:gap-6 xl:gap-8">
         {!isLoading ? (
           data.length > 0 ? (
-            data.map((element, index) => (
-              <EverythingCard
-                key={index}
-                title={element.title}
-                description={element.short_summary}
-                imgUrl={element.cover_image}
-                publishedAt={element.publishedAt}
-                url={element.url}
-                author={element.author}
-                source={element.source?.name || element.source} // Handle source as object or string
-              />
-            ))
+            data.map((element, index) => {
+              const isGroup = !!element.group_id;
+
+              if (
+                isGroup &&
+                (!element.articles || element.articles.length === 0)
+              ) {
+                return null;
+              }
+
+              const urls = isGroup
+                ? element.articles.map((article) => article.url).join(",")
+                : element.url;
+
+              const newsProviders = isGroup
+                ? element.articles.map((article) => article.source).join(",")
+                : element.source;
+
+              return (
+                <EverythingCard
+                  key={index}
+                  title={isGroup ? element.representative_title : element.title}
+                  description={element.short_summary}
+                  summary={element.long_summary}
+                  imgUrl={
+                    isGroup
+                      ? element.articles[0].cover_image
+                      : element.cover_image
+                  }
+                  publishedDate={
+                    isGroup
+                      ? element.articles[0].date_published
+                      : element.date_published
+                  }
+                  newsProvider={newsProviders}
+                  source={urls}
+                  id={element.id}
+                  category={element.category}
+                />
+              );
+            })
           ) : (
             <p>No articles found for this search query.</p>
           )
@@ -97,6 +122,7 @@ function Search1() {
           <Loader />
         )}
       </div>
+
       {!isLoading && data.length > 0 && (
         <div className="pagination flex justify-center gap-14 my-10 items-center">
           <button
