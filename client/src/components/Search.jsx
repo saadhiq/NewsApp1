@@ -53,7 +53,7 @@ function Search() {
           <span>{error}</span>
           <button
             onClick={() => setPage(page)} // Re-trigger fetch
-            className="text-dark px-4 py-2 rounded"
+            className="bg-blue-500 text-white px-4 py-2 rounded"
           >
             Retry
           </button>
