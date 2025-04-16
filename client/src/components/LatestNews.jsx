@@ -2,22 +2,11 @@ import React, { useState, useEffect } from "react";
 import EverythingCard from "./EverythingCard";
 import Loader from "./Loader";
 
-function AllNews() {
+function LatestNews() {
   const [data, setData] = useState([]);
-  const [page, setPage] = useState(1);
-  const [totalResults, setTotalResults] = useState(0);
+
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
-
-  const pageSize = 15;
-
-  const handlePrev = () => {
-    setPage((prev) => prev - 1);
-  };
-
-  const handleNext = () => {
-    setPage((prev) => prev + 1);
-  };
 
   useEffect(() => {
     setIsLoading(true);
@@ -32,7 +21,6 @@ function AllNews() {
       })
       .then((json) => {
         if (json.success) {
-          setTotalResults(json.data.length);
           setData(json.data);
         } else {
           setError(json.message || "An error occurred");
@@ -45,7 +33,7 @@ function AllNews() {
       .finally(() => {
         setIsLoading(false);
       });
-  }, [page]);
+  }, []);
 
   return (
     <>
@@ -54,7 +42,7 @@ function AllNews() {
         <h3>Latest News</h3>
       </div>
 
-      <div className="mt-16 mb-10 cards grid grid-cols-1 gap-4 xs:p-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:px-16 lg:gap-6 xl:gap-8">
+      <div className=" ptmt-16 mb-10 cards grid grid-cols-1 gap-4 xs:p-3 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 2xl:grid-cols-5 md:px-16 lg:gap-6 xl:gap-8">
         {!isLoading ? (
           data.map((element, index) => {
             const isGroup = !!element.group_id;
@@ -101,30 +89,8 @@ function AllNews() {
           <Loader />
         )}
       </div>
-
-      {!isLoading && data.length > 0 && (
-        <div className="pagination flex justify-center gap-25 items-center">
-          <button
-            disabled={page <= 1}
-            className="pagination-btn text-center"
-            onClick={handlePrev}
-          >
-            &larr; Prev
-          </button>
-          <p className="font-semibold opacity-80">
-            {page} of {Math.ceil(totalResults / pageSize)}
-          </p>
-          <button
-            className="pagination-btn text-center"
-            disabled={page >= Math.ceil(totalResults / pageSize)}
-            onClick={handleNext}
-          >
-            Next &rarr;
-          </button>
-        </div>
-      )}
     </>
   );
 }
 
-export default AllNews;
+export default LatestNews;

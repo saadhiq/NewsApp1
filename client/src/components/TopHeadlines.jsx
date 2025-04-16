@@ -7,19 +7,9 @@ function TopHeadlines() {
   const { category } = useParams(); // Destructure for clarity
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
-  const [totalResults, setTotalResults] = useState(0);
+
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
-
-  const pageSize = 6; // Constant since it’s not dynamic
-
-  function handlePrev() {
-    setPage(page - 1);
-  }
-
-  function handleNext() {
-    setPage(page + 1);
-  }
 
   useEffect(() => {
     setIsLoading(true);
@@ -34,10 +24,7 @@ function TopHeadlines() {
       })
       .then((json) => {
         if (json.success) {
-          setTotalResults(json.data.length);
           setData(json.data);
-          // setTotalResults(json.data.totalResults || 0); // Adjust if Flask uses a different key
-          // setData(json.data.articles || []); // Fallback to empty array
         } else {
           setError(json.message || "An error occurred");
         }
@@ -51,8 +38,6 @@ function TopHeadlines() {
       });
   }, [page, category]); // Dependency on category, not params.category
 
-  
-
   return (
     <>
       {error && (
@@ -65,7 +50,6 @@ function TopHeadlines() {
             Retry
           </button>
         </div>
-        
       )}
       <div className="today-header mt-8 mb-4 text-center font-semibold text-3xl text-gray-800">
         <h3> {category} news</h3>
@@ -94,27 +78,6 @@ function TopHeadlines() {
           <Loader />
         )}
       </div>
-      {!isLoading && data.length > 0 && (
-        <div className="pagination flex justify-center gap-14 my-10 items-center">
-          <button
-            disabled={page <= 1}
-            className="pagination-btn"
-            onClick={handlePrev}
-          >
-            Prev
-          </button>
-          <p className="font-semibold opacity-80">
-            {page} of {Math.ceil(totalResults / pageSize)}
-          </p>
-          <button
-            className="pagination-btn"
-            disabled={page >= Math.ceil(totalResults / pageSize)}
-            onClick={handleNext}
-          >
-            Next
-          </button>
-        </div>
-      )}
     </>
   );
 }

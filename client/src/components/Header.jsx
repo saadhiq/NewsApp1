@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom"; // Added useNavigate
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCircleArrowDown } from "@fortawesome/free-solid-svg-icons";
+import { faCircleArrowDown, faHouse } from "@fortawesome/free-solid-svg-icons";
 
 function Header() {
   const [active, setActive] = useState(false);
-  const [showCountryDropdown, setShowCountryDropdown] = useState(false);
   const [showCategoryDropdown, setShowCategoryDropdown] = useState(false);
   const [theme, setTheme] = useState("light-theme");
   const [searchTerm, setSearchTerm] = useState(""); // State for search input
@@ -41,19 +40,13 @@ function Header() {
 
   return (
     <header>
-      <nav className="fixed top-0 left-0 w-full h-auto bg-gray-600 z-10 flex items-center justify-between px-8">
-        {/* Logo (Left) */}
-        <div className="flex items-center md:basis-1/6 sm:basis-1/4 basis-1/3">
+      <nav className="pl-2 pr-2 fixed top-0 left-0 w-full h-auto bg-gray-600 z-10 flex items-center justify-between px-8">
+        <div className="pl-2 flex items-center md:basis-1/6 sm:basis-1/4 basis-1/3 ">
           <a href="/" className="group">
-            <h3
-              className="text-2xl  font-bold text-white hover:text-blue-300 transition-colors duration-200 sm:text-3xl"
-            >
-              Local News Summary
-            </h3>
+            <FontAwesomeIcon icon={faHouse} className="text-4xl " />
           </a>
         </div>
 
-        
         {/* Search Bar (Middle) */}
         <form onSubmit={handleSearch} className="search-form">
           <div className="search-container">
@@ -92,7 +85,6 @@ function Header() {
               className="no-underline font-semibold text-white flex items-center gap-2"
               onClick={() => {
                 setShowCategoryDropdown(!showCategoryDropdown);
-                setShowCountryDropdown(false);
               }}
             >
               Top-Headlines{" "}
@@ -152,7 +144,9 @@ function Header() {
         {/* Hamburger Menu */}
         <div
           className={
-            active ? "ham-burger z-index-100 ham-open" : "ham-burger z-index-100"
+            active
+              ? "ham-burger z-index-100 ham-open"
+              : "ham-burger z-index-100"
           }
           onClick={() => setActive(!active)}
         >
