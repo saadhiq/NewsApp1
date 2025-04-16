@@ -1,10 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSquareCaretDown,
-  faCircleChevronDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faCircleChevronDown } from "@fortawesome/free-solid-svg-icons";
 function EverythingCard(props) {
   return (
     <div className="everything-card mt-10 pb-10 shadow-lg rounded-lg overflow-hidden border bg-white max-w-sm mx-auto min-h-[450px]">

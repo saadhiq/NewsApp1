@@ -57,7 +57,10 @@ function Header() {
               placeholder="Search news..."
               className="search-input"
             />
-            <button type="submit" className="search-button">
+            <button
+              type="submit"
+              className="search-button bg-gray-800 text-white px-4 py-2 rounded hover:bg-gray-900 transition-colors duration-300"
+            >
               Search
             </button>
           </div>
